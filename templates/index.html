@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TNM095</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link rel='stylesheet' href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="./">TNM095 PROJECT</a>
+          </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-8" style = "margin-top: 2%">
+              <input type="text" class="form-control" id="yt-url" placeholder="Enter a Youtube URL e.g. https://www.youtube.com/watch?v=H6QdCxFZtf8">
+      </div>
+        <div class="col-sm-8" style = "margin-top: 2%">
+          <img data-src="holder.js/100%x650/white">
+        <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+        <!--div class ="embed-responsive embed-responsive-16by9">
+        <div id="player"></div>
+        </div-->
+      </div>
+      <div class="col-sm-4" style = "margin-top: 2%">
+       <img data-src="holder.js/100%x650/white">
+      </div>
+    </div>
+    </div>
+    <!-- /.container -->
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.3.2/holder.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}">
+    </script>

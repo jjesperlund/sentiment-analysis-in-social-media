@@ -1,0 +1,11 @@
+body {
+  padding-top: 50px;
+}
+
+.container{
+  width: 400px;
+  margin: 0 auto;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
