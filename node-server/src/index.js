@@ -139,7 +139,7 @@ app.get('/', function(req, res) {
   res.statusCode = 200;
   res.write('<h2>Express server.</h2>');
   res.write('<p><b>Youtube videos by category</b> <br/> /youtube-videos?category=X&count=X</p>');
-  res.write('<p><b>Youtube comments by video ID</b> <br/> /youtube-comments?videoID=X</p>');
+  res.write('<p><b>Youtube comments by video ID</b> <br/> /youtube-comments?videoID=X&count=X</p>');
   res.write('<p><b>Tweets by category</b> <br/> /tweets?category=X</p>');
   res.send();
 });
