@@ -151,7 +151,7 @@ app.get('/api/youtube-videos', function(req, res) {
   const numberOfVideos = req.query.count;
 
   // Send error if required params not defined
-  if (!category || !numberOfComments) {
+  if (!category || !numberOfVideos) {
     res.statusCode = 403;
     res.type('text');
     res.send('Error 403: Required parameters not defined.')
@@ -221,6 +221,6 @@ app.get('/api/youtube-comments', function(req, res) {
   
 });
 
-http.listen(5000, function () {
-  console.log('Listening on port 5000.');
+http.listen(5100, function () {
+  console.log('Listening on port 5100.');
 })
