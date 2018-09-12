@@ -169,7 +169,7 @@ app.get('/api/youtube-videos', function(req, res) {
   console.log('Request detected: Youtube videos by category', category);
 
   // Load client secrets from a local file.
-  fs.readFile('../assets/client_secret_david.json', function processClientSecrets(err, content) {
+  fs.readFile('../assets/client_secret.json', function processClientSecrets(err, content) {
     if (err) {
       console.log('Error loading client secret file: ' + err);
       return;
