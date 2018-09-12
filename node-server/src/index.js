@@ -3,13 +3,22 @@ var fs = require('fs');
 var readline = require('readline');
 var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-
-// const request = require('request');
+var Twitter = require('twitter');
 const express = require('express');
 const app = express();
 var http = require('http').Server(app);
 
+// Local imports
 const fetchData = require('./DataFetch');
+const env_variables = require('../assets/environment-variables');
+
+// Set up twitter client to access twitter API endpoints
+var client = new Twitter({
+  consumer_key: env_variables.consumer_key,
+  consumer_secret: env_variables.consumer_secret,
+  access_token_key: env_variables.access_token_key,
+  access_token_secret: env_variables.access_token_secret
+});
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/google-apis-nodejs-quickstart.json
@@ -138,9 +147,9 @@ app.get('/', function(req, res) {
   res.type('html');
   res.statusCode = 200;
   res.write('<h2>Express server.</h2>');
-  res.write('<p><b>Youtube videos by category</b> <br/> /youtube-videos?category=X&count=X</p>');
-  res.write('<p><b>Youtube comments by video ID</b> <br/> /youtube-comments?videoID=X&count=X</p>');
-  res.write('<p><b>Tweets by category</b> <br/> /tweets?category=X</p>');
+  res.write('<p><b>Youtube videos by category</b> <br/> /api/youtube-videos?category=X&count=X</p>');
+  res.write('<p><b>Youtube comments by video ID</b> <br/> /api/youtube-comments?videoID=X&count=X</p>');
+  res.write('<p><b>Tweets by category</b> <br/> /api/tweets?category=X&count=X</p>');
   res.send();
 });
 
@@ -181,6 +190,42 @@ app.get('/api/youtube-videos', function(req, res) {
 
   });
   
+});
+
+// Requested from client as /api/tweets?category=<HASH-TAG>&count=<COUNT>
+app.get('/api/tweets', function(req, res) {
+
+  const category = req.query.category;
+  const numberOfTweets = req.query.count;
+
+  // Send error if required params not defined
+  if (!category || !numberOfTweets) {
+    res.statusCode = 403;
+    res.type('text');
+    res.send('Error 403: Required parameters not defined.')
+  }
+
+  console.log('Request detected: Tweets by category:', category);
+  console.log('Fetching', numberOfTweets, 'tweets..');
+
+  // Get tweets from Twitter API Endpoint /tweets
+  client.get(
+    'https://api.twitter.com/1.1/search/tweets.json?q=%23' + category + '&lang=en&count=' + numberOfTweets + '&result_type=recent', 
+    function(error, tweets) {
+    if (error) throw error;
+    // console.log(tweets);
+    let result = [];  
+    tweets.statuses.forEach((item) => {
+      result.push(item.text);
+      //console.log(item.text);
+    });
+
+    //Send response to client
+    res.type('json');
+    res.statusCode = 200;
+    res.send(result);
+
+  });
 });
 
 // Requested from client as /api/youtube-comments?videoID=<VIDEO ID>&count=<COUNT>
