@@ -1,0 +1,4 @@
+
+# Ignore secret tokens
+node-server/assets/client-secret.json
+node-server/assets/environment-variables.js
