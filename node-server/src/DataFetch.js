@@ -43,6 +43,7 @@ getCommentThreadsListByVideoId = (auth, requestData, res) => {
     }
 
     let result = response.data.items.map((item) => ({
+      socialMedia: "youtube",
       authorDisplayName: item.snippet.topLevelComment.snippet.authorDisplayName,
       authorProfileImageUrl: item.snippet.topLevelComment.snippet.authorProfileImageUrl,
       comment: item.snippet.topLevelComment.snippet.textOriginal,

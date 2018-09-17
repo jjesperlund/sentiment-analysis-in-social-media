@@ -215,6 +215,7 @@ app.get('/api/tweets', function(req, res) {
     if (error) throw error;
 
     let result = tweets.statuses.map((item) => ({
+      socialMedia: "twitter",
       authorDisplayName: item.user.name,
       authorProfileImageUrl: item.user.profile_image_url,
       tweetText: item.text,
@@ -247,7 +248,7 @@ app.get('/api/youtube-comments', function(req, res) {
   console.log('Fetching', numberOfComments, 'comments..');
 
   // Load client secrets from a local file.
-  fs.readFile('../assets/client_secret.json', function processClientSecrets(err, content) {
+  fs.readFile('../assets/client_secret_david.json', function processClientSecrets(err, content) {
     if (err) {
       console.log('Error loading client secret file: ' + err);
       return;
