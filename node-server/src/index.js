@@ -213,12 +213,14 @@ app.get('/api/tweets', function(req, res) {
     'https://api.twitter.com/1.1/search/tweets.json?q=%23' + category + '&lang=en&count=' + numberOfTweets + '&result_type=recent', 
     function(error, tweets) {
     if (error) throw error;
-    // console.log(tweets);
-    let result = [];  
-    tweets.statuses.forEach((item) => {
-      result.push(item.text);
-      //console.log(item.text);
-    });
+
+    let result = tweets.statuses.map((item) => ({
+      authorDisplayName: item.user.name,
+      authorProfileImageUrl: item.user.profile_image_url,
+      tweetText: item.text,
+      retweetCount: item.retweet_count,
+      timestamp: new Date(item.created_at)
+    }));
 
     //Send response to client
     res.type('json');
