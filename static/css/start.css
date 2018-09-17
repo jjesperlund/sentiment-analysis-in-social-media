@@ -1,0 +1,32 @@
+body {
+padding-top: 50px;
+background: #2f3135;
+font-family: 'Quicksand';
+}
+  
+.container{
+width: 400px;
+margin: 0 auto;
+border: solid 1px #ccc;
+border-radius: 5px;
+overflow: hidden;
+}
+
+#input-wrapper {
+margin-top: 45%;
+height: 80px;
+background: none;
+font-size: 45px;
+font-weight: 100;
+text-align: center;
+color: whitesmoke;
+}
+
+#input-details {
+color: whitesmoke;
+text-align: center;
+font-size: 15px;
+padding-top: 2%;
+font-weight: 100;
+opacity: 0.6;
+}
