@@ -41,11 +41,15 @@ getCommentThreadsListByVideoId = (auth, requestData, res) => {
       console.log('The API returned an error: ' + err);
       return;
     }
-    const result = [];
-    response.data.items.forEach((item) => {
-      const comment = item.snippet.topLevelComment.snippet.textOriginal;
-      result.push(comment);
-  });
+    
+    let result = response.data.items.map((item) => ({
+      authorDisplayName: item.snippet.topLevelComment.snippet.authorDisplayName,
+      authorProfileImageUrl: item.snippet.topLevelComment.snippet.authorProfileImageUrl,
+      comment: item.snippet.topLevelComment.snippet.textOriginal,
+      likeCount: item.snippet.topLevelComment.snippet.likeCount,
+      publishedAt: item.snippet.topLevelComment.snippet.publishedAt
+    }));
+
     res.type('json');
     res.statusCode = 200;
     res.send(result);
