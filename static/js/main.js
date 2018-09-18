@@ -7,5 +7,10 @@ window.onload = () => {
       var sentiment_data = $.parseJSON(data);
       console.log(sentiment_data)
   })
+
+  var table = document.getElementById("table");
+  createTable(table);
 }
+
+
 

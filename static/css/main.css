@@ -1,12 +1,19 @@
 body {
   padding-top: 50px;
-  font-family: 'Nunito, sans serif';
+  background: #2f3135;
+  font-family: 'Quicksand';
 }
+.table {
+  color:whitesmoke;
 
-.container{
-  width: 400px;
-  margin: 0 auto;
-  border: solid 1px #ccc;
-  border-radius: 5px;
-  overflow: hidden;
+}
+#table-content {
+  max-height: 97%;
+  overflow: scroll;
+}
+.wrapper {
+  height: 700px;
+  margin-top: 2%;
+  border-radius: 4px;
+  border: 1px solid whitesmoke;
 }
