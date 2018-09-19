@@ -1,6 +1,7 @@
 body {
   padding-top: 50px;
-  background: #2f3135;
+  /*background: #2f3135;*/
+  background: whitesmoke;
   font-family: 'Quicksand';
 }
 .table {
@@ -11,15 +12,56 @@ body {
   overflow: scroll;
 }
 .wrapper {
-  height: 600px;
+  height: 700px;
   padding: 0;
   border-radius: 4px;
-  border: .5px solid whitesmoke;
+  border: .5px solid lightgray;
 }
 
-.content {
-  height: 300px;
-  margin-top: 2%;
-  border-radius: 4px;
-  border: .5px solid whitesmoke;
+/* Tabs */
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  background-color: #222;
+  color: whitesmoke;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  border-radius: 6px 6px 0px 0px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: rgb(143, 143, 143);
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: whitesmoke;
+  color: #222;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.tabcontent {
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }

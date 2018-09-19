@@ -17,8 +17,9 @@
     <link href="../static/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  </head>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.3.2/holder.min.js" type="text/javascript"></script>
+  </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
@@ -29,39 +30,85 @@
           </div>
         </div>
     </div>
+
+    <!-- Tab links -->
+<div class="tab">
+    <button class="tablinks active" onclick="toggleTab(event, 'Overview')">Overview</button>
+    <button class="tablinks" onclick="toggleTab(event, 'Word Cloud')">Word Cloud</button>
+    <button class="tablinks" onclick="toggleTab(event, 'List')">List</button>
+  </div>
+  
+  <!-- Tab content -->
+  <div id="Overview" class="tabcontent">
+    <h3>Overview</h3>
     <div class="container-fluid">
-    <div class="row">
-      <div class="content"></div>
-    </div>
-    <div class="row">
-        <div class="wrapper col-sm-5">
-          <div id="table-content">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Social Media</th>
-                  <th scope="col">User Name</th>
-                  <th scope="col">Comment</th>
-                  <th scope="col">Timestamp</th>
-                </tr>
-              </thead>
-              <tbody id="table">
-                <!-- Content is inserted here from javascript -->
-              </tbody>
-            </table>
-          </div>
+        <div class="row">
+            <div class="wrapper col-sm-5">
+              <div id="table-content">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Social Media</th>
+                      <th scope="col">User Name</th>
+                      <th scope="col">Comment</th>
+                      <th scope="col">Timestamp</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table">
+                    <!-- Content is inserted here from javascript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="wrapper col-sm-7"></div>
         </div>
-        <div class="wrapper col-sm-7"></div>
-    </div>
-    </div>
-    <!-- /.container -->
+        </div>
+  </div>
+  
+  <div id="Word Cloud" class="tabcontent">
+    <h3>Word Cloud</h3>
+  </div>
+  
+  <div id="List" class="tabcontent">
+    <h3>List</h3>
+  </div>
 
+<!-- /.container -->
 
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="../static/js/table.js"></script>
+<script type="text/javascript" src="../static/js/main.js"></script>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.3.2/holder.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../static/js/table.js"></script>
-    <script type="text/javascript" src="../static/js/main.js"></script>
+<script>
+  window.onload = function() {
+    let tab = document.getElementById('Overview');
+    tab.style.display = "block";
+    tab.className += " active";
+  }
+  function toggleTab(evt, tabName) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+  }
+</script>
+
+</body>
+</html>
+
