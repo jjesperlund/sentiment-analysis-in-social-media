@@ -1,0 +1,43 @@
+#volume .ui-slider-handle {
+    width: 0px;
+    height: 0px;
+	position: absolute;
+	cursor: pointer;
+	outline: none;
+	border: none;
+}
+
+#volume .ui-slider-handle::after {
+	$size: 25px;
+	font-size: $size;
+	position: absolute;
+	top: -5px;
+	left: -$size/2
+}
+
+#volume {
+	&.v0 .ui-slider-handle::after {
+		content: '\1F634';
+	}
+	&.v1 .ui-slider-handle::after {
+		content: '\1F62B';
+	}
+	&.v2 .ui-slider-handle::after {
+		content: '\1F614';
+	}
+	&.v3 .ui-slider-handle::after {
+		content: '\1F60C';
+	}
+	&.v4 .ui-slider-handle::after {
+		content: '\1F60F';
+	}
+	&.v5 .ui-slider-handle::after {
+		content: '\1F60A';
+	}
+	&.v6 .ui-slider-handle::after {
+		content: '\1F604';
+	}
+	&.v7 .ui-slider-handle::after {
+		content: '\1F60D';
+	}
+}
