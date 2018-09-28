@@ -66,20 +66,22 @@
             <h2>Number of comments fetched: <b>1239</b></h2>
 
           </div>
+          <div class="row">
+              <div id="pie-chart" style="bottom: 0">
+                  <!-- Content is inserted here from javascript -->
+                  <canvas id="pie-chart-canvas"></canvas>
+              </div>
+          </div>
         </div>
         <div class="col-lg-4" id="overview-stats" style="float: right;padding:3%;border-left:1px solid #ccc;">
           <div class="row">
-            <div id="bubble-chart">
+            <div id="line-chart">
                 <!-- Content is inserted here from javascript -->
-                <canvas id="bubble-chart-canvas"></canvas>
+                <canvas id="line-chart-canvas1"></canvas>
+                <canvas id="line-chart-canvas2"></canvas>
             </div>
           </div>
-          <div class="row">
-              <div id="bar-chart" style="bottom: 0">
-                  <!-- Content is inserted here from javascript -->
-                  <canvas id="bar-chart-canvas"></canvas>
-              </div>
-            </div>
+         
         </div>
     </div>
   </div>
@@ -98,7 +100,7 @@
             <thead>
               <tr>
                 <th scope="col">Social Media</th>
-                <th scope="col">User Name</th>
+                <th scope="col">User</th>
                 <th scope="col">Comment</th>
                 <th scope="col">Timestamp</th>
               </tr>

@@ -1,97 +1,76 @@
 class Charts {
 
-    createBubbleChart(canvas) {
-        const wrapper = document.getElementById('bubble-chart');
+    createLineChart(canvas) {
+        const wrapper = document.getElementById('line-chart');
         wrapper.appendChild(canvas);
         const ctx = canvas.getContext('2d');
 
 		const config = {
-            type: 'bubble',
+            type: 'line',
             data: {
-              datasets: [
-                {
-                  label: ["Youtube"],
-                  backgroundColor: "#de251a66",
-                  borderColor: "#de251a",
-                  data: [{
-                    x: moment('2018-07-01'),
-                    y: -5.245
-                  }]
-                }, {
-                  label: ["Twitter"],
-                  backgroundColor: "#23cbff7a",
-                  borderColor: "#23cbff",
-                  data: [{
-                    x: moment('2018-07-02'),
-                    y: 7.526
-                  }]
-                }, 
+              labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+              datasets: [{ 
+                  data: [86,114,106,106,107,111,133,221,783,2478],
+                  label: "Africa",
+                  borderColor: "#3e95cd",
+                  fill: false
+                }, { 
+                  data: [282,350,411,502,635,809,947,1402,3700,5267],
+                  label: "Asia",
+                  borderColor: "#8e5ea2",
+                  fill: false
+                }, { 
+                  data: [168,170,178,190,203,276,408,547,675,734],
+                  label: "Europe",
+                  borderColor: "#3cba9f",
+                  fill: false
+                }, { 
+                  data: [40,20,10,16,24,38,74,167,508,784],
+                  label: "Latin America",
+                  borderColor: "#e8c3b9",
+                  fill: false
+                }, { 
+                  data: [6,3,2,2,7,26,82,172,312,433],
+                  label: "North America",
+                  borderColor: "#c45850",
+                  fill: false
+                }
               ]
             },
             options: {
               title: {
                 display: true,
-                text: 'Distribution over time'
-              }, scales: {
-                yAxes: [{ 
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Pos - Neg scale"
-                  }
-                }],
-                xAxes: [{ 
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Timestamp"
-                  }
-                }]
+                text: 'World population per region (in millions)'
               }
             }
-        };
-        const bubbleChart = new Chart(ctx, config);
+          };
+        const lineChart = new Chart(ctx, config);
 
     }
 
-    createBarchart(canvas) {
-        const wrapper = document.getElementById('bar-chart');
+    createPiechart(canvas) {
+        const wrapper = document.getElementById('pie-chart');
         wrapper.appendChild(canvas);
         const ctx = canvas.getContext('2d');
 
         const config = {
-            type: 'bar',
+            type: 'pie',
             data: {
-                labels: ["YouTube", "Twitter"],
-                datasets: [{
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        "#de251a66",
-                        "#23cbff7a",
-                    ],
-                    borderColor: [
-                        "#de251a",
-                        "#23cbff",
-                    ],
-                    borderWidth: 1
-                }]
+              labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+              datasets: [{
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: [2478,5267,734,784,433]
+              }]
             },
             options: {
-                title: {
-                    display: true,
-                    text: 'Distribution sum'
-                  },
-                  legend: {
-                    display: false
-                  },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
+              title: {
+                display: true,
+                text: 'Predicted world population (millions) in 2050'
+              }
             }
-        };
-        const barChart = new Chart(ctx, config);
+        }
+        const pieChart = new Chart(ctx, config);
     }
 
 }
