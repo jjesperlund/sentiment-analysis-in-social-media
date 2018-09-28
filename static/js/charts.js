@@ -40,7 +40,7 @@ class Charts {
             options: {
               title: {
                 display: true,
-                text: 'World population per region (in millions)'
+                text: 'Youtube: Positive Comments Over Time'
               }
             }
           };
@@ -48,7 +48,7 @@ class Charts {
 
     }
 
-    createPiechart(canvas) {
+    createPiechart(canvas, data) {
         const wrapper = document.getElementById('pie-chart');
         wrapper.appendChild(canvas);
         const ctx = canvas.getContext('2d');
@@ -56,17 +56,17 @@ class Charts {
         const config = {
             type: 'pie',
             data: {
-              labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+              labels: ["Positive comments", "Negative comments"],
               datasets: [{
-                label: "Population (millions)",
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                data: [2478,5267,734,784,433]
+                //label: "Population (millions)",
+                backgroundColor: ["#3de253", "#db3f34"],
+                data: [data.twitter.positives + data.youtube.positives, data.twitter.negatives + data.youtube.negatives]
               }]
             },
             options: {
               title: {
                 display: true,
-                text: 'Predicted world population (millions) in 2050'
+                text: 'Total percentage of positive and negative comments'
               }
             }
         }
