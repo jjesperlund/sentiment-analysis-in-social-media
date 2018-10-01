@@ -149,8 +149,46 @@ app.get('/', function(req, res) {
   res.write('<h2>Express server.</h2>');
   res.write('<p><b>Youtube videos by category</b> <br/> /api/youtube-videos?category=X&count=X</p>');
   res.write('<p><b>Youtube comments by video ID</b> <br/> /api/youtube-comments?videoID=X&count=X</p>');
+  res.write('<p><b>Reddit comments by keyword</b> <br/> /api/reddit-comments?category=X&count=X</p>');
   res.write('<p><b>Tweets by category</b> <br/> /api/tweets?category=X&count=X</p>');
   res.send();
+});
+
+// Requested from client as /api/reddit-comments?count=<COUNT>
+app.get('/api/reddit-comments', function(req, res) {
+
+  const category = req.query.category;
+  const count = req.query.count;
+
+  // Send error if required params not defined
+  if (!category || !count) {
+    res.statusCode = 403;
+    res.type('text');
+    res.send('Error 403: Required parameters not defined.')
+  }
+
+  console.log('Request detected: Reddit comments by keyword:', category);
+  console.log('Fetching', count, 'reddit comments..');
+
+  // Get reddit comments from reddit rest api
+  client.get(
+    'https://api.pushshift.io/reddit/search/comment/?q=' + category + '&limit=' + count,
+    function(error, response) {
+    if (error) throw error;
+    
+    let result = response.data.map((item) => ({
+      socialMedia: "reddit",
+      authorDisplayName: item.author,
+      comment: item.body,
+      timestamp: new Date(item.created_utc)
+    }));
+
+    //Send response to client
+    res.type('json');
+    res.statusCode = 200;
+    res.send(result);
+
+  });
 });
 
 // Requested from client as /api/youtube-videos?category=<CATEGORY>&count=<COUNT>
