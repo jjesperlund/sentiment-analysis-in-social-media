@@ -3,20 +3,21 @@ html {
 }
 
 body {
-  padding-top: 50px;
+  /*padding-top: 50px;*/
   height:100%;
   /*background: #2f3135;*/
   background: whitesmoke;
   font-family: 'Quicksand';
 }
 
-canvas {
-  height: 50%;
-}
 
 h3 {
   border-bottom: 1px solid #ccc;
   padding: 0% 0% 2% 1%;
+}
+
+h4 {
+  font-size: 16pt;
 }
 
 #overview-stats {

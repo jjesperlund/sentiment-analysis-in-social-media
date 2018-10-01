@@ -25,15 +25,6 @@
 
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="./">Sentiment Analysis in Social Media</a>
-            <img class="navbar-brand" src="../static/assets/youtube_logo.png">
-            <img class="navbar-brand" src="../static/assets/twitter_logo.png" style="border-radius: 18px">
-          </div>
-        </div>
-    </div>
 
     <!-- Tab links -->
 <div class="tab">
@@ -48,7 +39,7 @@
       New Search
     </a>
     <p
-    style="margin: 0.7% 10% 0% 68%;font-size:17pt;" 
+    style="margin: 0.6% 10% 0% 70%;font-size:17pt;" 
     id="category-name"
   >
   </p>
@@ -62,9 +53,14 @@
     </div>
     <div class="row">
         <div class="col-lg-2" id="overview-stats" style="float:left">
-          <div class="row" style="padding: 5%;">
-            <h2>Number of comments fetched: <b>1239</b></h2>
-
+          <div class="row" id="category-hash" style="padding: 2% 0% 0% 5%;">
+              <!-- Content loaded from JS -->
+          </div>
+          <div class="row" id="amount-comments" style="padding: 2% 0% 0% 5%;">
+            <!-- Content loaded from JS -->
+          </div>
+          <div class="row" id="timespan" style="padding-left: 5%;padding-bottom:10%;">
+              <!-- Content loaded from JS -->
           </div>
           <div class="row">
               <div id="pie-chart" style="bottom: 0">
@@ -77,8 +73,16 @@
           <div class="row">
             <div id="line-chart">
                 <!-- Content is inserted here from javascript -->
-                <canvas id="line-chart-canvas1"></canvas>
-                <canvas id="line-chart-canvas2"></canvas>
+                <div class="row">
+          
+                  <canvas id="line-chart-canvas1" height="130px"></canvas>
+                </div>
+                
+                <div class="row">
+                
+                  <canvas id="line-chart-canvas2" height="130px"></canvas>
+                </div>
+                
             </div>
           </div>
          
