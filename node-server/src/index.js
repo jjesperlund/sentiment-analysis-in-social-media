@@ -1,7 +1,8 @@
-
 var fs = require('fs');
 var readline = require('readline');
-var { google } = require('googleapis');
+var {
+  google
+} = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 var Twitter = require('twitter');
 const express = require('express');
@@ -24,9 +25,9 @@ var client = new Twitter({
 // at ~/.credentials/google-apis-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
+  process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'google-apis-nodejs-quickstart.json';
-
+console.log(TOKEN_PATH)
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -43,7 +44,7 @@ function authorize(credentials, requestData, callback, res) {
   var oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
 
   // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, function(err, token) {
+  fs.readFile(TOKEN_PATH, function (err, token) {
     if (err) {
       getNewToken(oauth2Client, requestData, callback);
     } else {
@@ -71,9 +72,9 @@ function getNewToken(oauth2Client, requestData, callback) {
     input: process.stdin,
     output: process.stdout
   });
-  rl.question('Enter the code from that page here: ', function(code) {
+  rl.question('Enter the code from that page here: ', function (code) {
     rl.close();
-    oauth2Client.getToken(code, function(err, token) {
+    oauth2Client.getToken(code, function (err, token) {
       if (err) {
         console.log('Error while trying to retrieve access token', err);
         return;
@@ -142,7 +143,7 @@ function createResource(properties) {
   return resource;
 }
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   //res.set('Content-Type', 'text/plain');
   res.type('html');
   res.statusCode = 200;
@@ -150,6 +151,7 @@ app.get('/', function(req, res) {
   res.write('<p><b>Youtube videos by category</b> <br/> /api/youtube-videos?category=X&count=X</p>');
   res.write('<p><b>Youtube comments by video ID</b> <br/> /api/youtube-comments?videoID=X&count=X</p>');
   res.write('<p><b>Reddit comments by keyword</b> <br/> /api/reddit-comments?category=X&count=X</p>');
+  res.write('<p><b>Youtube comments by multiple ID</b> <br/> /api/youtube-multipleID?multipleID=X</p>');
   res.write('<p><b>Tweets by category</b> <br/> /api/tweets?category=X&count=X</p>');
   res.send();
 });
@@ -192,7 +194,7 @@ app.get('/api/reddit-comments', function(req, res) {
 });
 
 // Requested from client as /api/youtube-videos?category=<CATEGORY>&count=<COUNT>
-app.get('/api/youtube-videos', function(req, res) {
+app.get('/api/youtube-videos', function (req, res) {
 
   const category = req.query.category;
   const numberOfVideos = req.query.count;
@@ -203,7 +205,7 @@ app.get('/api/youtube-videos', function(req, res) {
     res.type('text');
     res.send('Error 403: Required parameters not defined.')
   }
-    
+
   console.log('Request detected: Youtube videos by category', category);
 
   // Load client secrets from a local file.
@@ -225,13 +227,11 @@ app.get('/api/youtube-videos', function(req, res) {
     // Authorize a client with the loaded credentials, then call the YouTube API.
     //See full code sample for authorize() function code.
     authorize(JSON.parse(content), requestParams, fetchData.getVideosByKeyword, res);
-
   });
-  
 });
 
 // Requested from client as /api/tweets?category=<HASH-TAG>&count=<COUNT>
-app.get('/api/tweets', function(req, res) {
+app.get('/api/tweets', function (req, res) {
 
   const category = req.query.category;
   const numberOfTweets = req.query.count;
@@ -248,29 +248,61 @@ app.get('/api/tweets', function(req, res) {
 
   // Get tweets from Twitter API Endpoint /tweets
   client.get(
-    'https://api.twitter.com/1.1/search/tweets.json?q=%23' + category + '&lang=en&count=' + numberOfTweets + '&result_type=recent', 
-    function(error, tweets) {
-    if (error) throw error;
+    'https://api.twitter.com/1.1/search/tweets.json?q=%23' + category + '&lang=en&count=' + numberOfTweets + '&result_type=recent',
+    function (error, tweets) {
+      if (error) throw error;
 
-    let result = tweets.statuses.map((item) => ({
-      socialMedia: "twitter",
-      authorDisplayName: item.user.name,
-      authorProfileImageUrl: item.user.profile_image_url,
-      tweetText: item.text,
-      retweetCount: item.retweet_count,
-      timestamp: new Date(item.created_at)
-    }));
+      let result = tweets.statuses.map((item) => ({
+        socialMedia: "twitter",
+        authorDisplayName: item.user.name,
+        authorProfileImageUrl: item.user.profile_image_url,
+        tweetText: item.text,
+        retweetCount: item.retweet_count,
+        timestamp: new Date(item.created_at)
+      }));
 
-    //Send response to client
-    res.type('json');
-    res.statusCode = 200;
-    res.send(result);
+      //Send response to client
+      res.type('json');
+      res.statusCode = 200;
+      res.send(result);
 
-  });
+    });
 });
 
+// Requested from client as /api/youtube-multipleID?multipleID=<VIDEO IDs...>
+app.get('/api/youtube-multipleID', function (req, res) {
+  const multipleID = req.query.multipleID
+
+  if (!multipleID) {
+    res.statusCode = 403;
+    res.type('text');
+    res.send('Error 403: Required parameters not defined.')
+  }
+
+  console.log('Request detected: Youtube comments by multiple video IDs:', multipleID);
+
+  // Load client secrets from a local file.
+  fs.readFile('../assets/client_secret_david.json', function processClientSecrets(err, content) {
+    if (err) {
+      console.log('Error loading client secret file: ' + err);
+      return;
+    }
+    // Data parameters to fetch data
+    let requestParams = {
+      'params': {
+        'part': 'snippet,statistics',
+        'id': multipleID
+      }
+    };
+    // Authorize a client with the loaded credentials, then call the YouTube API.
+    //See full code sample for authorize() function code.
+    authorize(JSON.parse(content), requestParams, fetchData.getVideoListMultipleId, res);
+  })
+});
+
+
 // Requested from client as /api/youtube-comments?videoID=<VIDEO ID>&count=<COUNT>
-app.get('/api/youtube-comments', function(req, res) {
+app.get('/api/youtube-comments', function (req, res) {
 
   const videoID = req.query.videoID;
   const numberOfComments = req.query.count;
@@ -282,8 +314,8 @@ app.get('/api/youtube-comments', function(req, res) {
     res.send('Error 403: Required parameters not defined.')
   }
 
-  console.log('Request detected: Youtube comments by video ID:', videoID);
-  console.log('Fetching', numberOfComments, 'comments..');
+  //console.log('Request detected: Youtube comments by video ID:', videoID);
+  //console.log('Fetching', numberOfComments, 'comments..');
 
   // Load client secrets from a local file.
   fs.readFile('../assets/client_secret_david.json', function processClientSecrets(err, content) {
@@ -302,9 +334,8 @@ app.get('/api/youtube-comments', function(req, res) {
     // Authorize a client with the loaded credentials, then call the YouTube API.
     //See full code sample for authorize() function code.
     authorize(JSON.parse(content), requestParams, fetchData.getCommentThreadsListByVideoId, res);
-
   });
-  
+
 });
 
 http.listen(5100, function () {

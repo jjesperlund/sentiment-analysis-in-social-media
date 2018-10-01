@@ -1,11 +1,12 @@
-var { google } = require('googleapis');
+var {
+  google
+} = require('googleapis');
 
 getVideosByKeyword = (auth, requestData, res) => {
   var service = google.youtube('v3');
   var parameters = removeEmptyParameters(requestData['params']);
   parameters['auth'] = auth;
-
-  service.search.list(parameters, function(err, response) {
+  service.search.list(parameters, function (err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
@@ -14,6 +15,7 @@ getVideosByKeyword = (auth, requestData, res) => {
     // Parse response, retrieve wanted props
     let result = [];
     response.data.items.forEach((item) => {
+
       // Only add item if videoId exists
       if (item.id.videoId) {
         result.push({
@@ -23,6 +25,7 @@ getVideosByKeyword = (auth, requestData, res) => {
         });
       }
     });
+
     //console.log(videos);
     res.type('json');
     res.statusCode = 200;
@@ -35,12 +38,12 @@ getCommentThreadsListByVideoId = (auth, requestData, res) => {
   var service = google.youtube('v3');
   var parameters = removeEmptyParameters(requestData['params']);
   parameters['auth'] = auth;
-
-  service.commentThreads.list(parameters, function(err, response) {
+  service.commentThreads.list(parameters, function (err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
+
 
     let result = response.data.items.map((item) => ({
       socialMedia: "youtube",
@@ -50,6 +53,36 @@ getCommentThreadsListByVideoId = (auth, requestData, res) => {
       likeCount: item.snippet.topLevelComment.snippet.likeCount,
       timestamp: new Date(item.snippet.topLevelComment.snippet.publishedAt)
     }));
+
+    res.type('json');
+    res.statusCode = 200;
+    res.send(result);
+  });
+}
+
+
+getVideoListMultipleId = (auth, requestData, res) => {
+  var service = google.youtube('v3');
+  var parameters = removeEmptyParameters(requestData['params']);
+  parameters['auth'] = auth;
+  service.videos.list(parameters, function (err, response) {
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+
+    // Parse response, retrieve wanted props
+    let result = [];
+    response.data.items.forEach((item) => {
+      // Add videos if videoId exists and if commentCount != None
+      if (item.id && item.statistics.commentCount != 0) {
+        result.push({
+          title: item.snippet.title,
+          videoId: item.id,
+          channelId: item.snippet.channelId,
+        });
+      }
+    });
 
     res.type('json');
     res.statusCode = 200;
@@ -75,3 +108,4 @@ removeEmptyParameters = (params) => {
 
 module.exports.getVideosByKeyword = getVideosByKeyword;
 module.exports.getCommentThreadsListByVideoId = getCommentThreadsListByVideoId;
+module.exports.getVideoListMultipleId = getVideoListMultipleId;

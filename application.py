@@ -15,10 +15,15 @@ def getProbabilityDist(comment):
     return [prob_dist.prob('positive'), prob_dist.prob('negative')]
 
 def retrieveYoutube(category):
+    multipleID = ""
     get_youtube = requests.get('http://127.0.0.1:5100/api/youtube-videos?category='+category+'&count=10')
     response_json = get_youtube.json()
-    #print(response_json)
-    test = True
+    for line in response_json:
+        multipleID += line['videoId'] + ','
+    multipleID = multipleID[:-1]
+
+    get_youtube = requests.get('http://127.0.0.1:5100/api/youtube-multipleID?multipleID='+multipleID)
+    response_json = get_youtube.json()
     json_vec = []
     for i in response_json:
         comments_response = requests.get('http://127.0.0.1:5100/api/youtube-comments?videoID='+i['videoId']+'&count=10')
@@ -59,8 +64,6 @@ def start():
 def index():
     return render_template('index.html')
 
-
-
 @app.route("/category=<category>")
 def category_route(category):
     category_variable = category
@@ -69,10 +72,10 @@ def category_route(category):
 
     json_vec = twitter_vec+youtube_vec
     json_vec = json.dumps(json_vec)
-    with open('youtubeTwitter.json', 'w') as outfile:
-        json_vec = json.dumps(json_vec)
-        json_dat = json.loads(json_vec)
-        json.dump(json_dat, outfile)
+    #with open('youtubeTwitter.json', 'w') as outfile:
+     #   json_vec = json.dumps(json_vec)
+      #  json_dat = json.loads(json_vec)
+       # json.dump(json_dat, outfile)
     return json_vec
     
 
