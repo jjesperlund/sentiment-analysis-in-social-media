@@ -25,15 +25,6 @@
 
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="./">Sentiment Analysis in Social Media</a>
-            <img class="navbar-brand" src="../static/assets/youtube_logo.png">
-            <img class="navbar-brand" src="../static/assets/twitter_logo.png" style="border-radius: 18px">
-          </div>
-        </div>
-    </div>
 
     <!-- Tab links -->
 <div class="tab">
@@ -77,8 +68,16 @@
           <div class="row">
             <div id="line-chart">
                 <!-- Content is inserted here from javascript -->
-                <canvas id="line-chart-canvas1"></canvas>
-                <canvas id="line-chart-canvas2"></canvas>
+                <div class="row">
+                  <h4>Development of Positive Comments</h4>
+                  <canvas id="line-chart-canvas1" height="100px"></canvas>
+                </div>
+                
+                <div class="row">
+                  <h4>Development of Negative Comments</h4>
+                  <canvas id="line-chart-canvas2" height="100px"></canvas>
+                </div>
+                
             </div>
           </div>
          
