@@ -16,23 +16,26 @@ def getProbabilityDist(comment):
 
 def retrieveYoutube(category):
     multipleID = ""
+    json_vec = []
+
+    # First request to search by keyword.
     get_youtube = requests.get('http://127.0.0.1:5100/api/youtube-videos?category='+category+'&count=10')
     response_json = get_youtube.json()
     for line in response_json:
         multipleID += line['videoId'] + ','
     multipleID = multipleID[:-1]
 
+    # Second requests to get statistics of video using multiple IDs.
     get_youtube = requests.get('http://127.0.0.1:5100/api/youtube-multipleID?multipleID='+multipleID)
     response_json = get_youtube.json()
-    json_vec = []
-    for i in response_json:
-        comments_response = requests.get('http://127.0.0.1:5100/api/youtube-comments?videoID='+i['videoId']+'&count=10')
+    for json_obj in response_json:
+        comments_response = requests.get('http://127.0.0.1:5100/api/youtube-comments?videoID='+json_obj['videoId']+'&count=10')
         json_data = comments_response.json()
         for c in json_data:
             comment = processVec(c['comment'].lower())
             sentiment = classifier.classify(word_feature_vec(comment)) #pos eller neg
             c['sentiment'] = sentiment
-            c['videoTitle'] = i['title']
+            c['videoTitle'] = json_obj['title']
             prob_dist = getProbabilityDist(comment)
             c['probability'] = prob_dist
             json_vec.append(c)
@@ -40,10 +43,11 @@ def retrieveYoutube(category):
     return json_vec
 
 def retrieveTwitter(category):
+    json_vec = []
+
+    # Request tweets
     get_twitter = requests.get('http://127.0.0.1:5100/api/tweets?category=' +category+'&count=100')
     response_json = get_twitter.json()
-    #print(response_json)
-    json_vec = []
     for json_obj in response_json:
         json_obj['comment'] = json_obj['tweetText']
         json_obj.pop('tweetText')
@@ -54,6 +58,22 @@ def retrieveTwitter(category):
         json_obj['probability'] = prob_dist
         json_vec.append(json_obj)
     
+    return json_vec
+
+def retrieveReddit(category):
+    json_vec = []
+
+    # Request reddit comments
+    get_reddit = requests.get('http://127.0.0.1:5100/api/reddit-comments?category='+category+'&count=100')
+    response_json = get_reddit.json()
+    for json_obj in response_json:
+        comment = processVec(json_obj['comment'].lower())
+        sentiment = classifier.classify(word_feature_vec(comment)) #pos eller neg
+        json_obj['sentiment'] = sentiment
+        prob_dist = getProbabilityDist(comment)
+        json_obj['probability'] = prob_dist
+        json_vec.append(json_obj)
+
     return json_vec
 
 @app.route("/")
@@ -69,8 +89,9 @@ def category_route(category):
     category_variable = category
     youtube_vec = retrieveYoutube(category_variable)
     twitter_vec = retrieveTwitter(category_variable)
+    reddit_vec = retrieveReddit(category_variable)
 
-    json_vec = twitter_vec+youtube_vec
+    json_vec = twitter_vec+youtube_vec+reddit_vec
     json_vec = json.dumps(json_vec)
     #with open('youtubeTwitter.json', 'w') as outfile:
      #   json_vec = json.dumps(json_vec)
