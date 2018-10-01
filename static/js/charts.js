@@ -68,7 +68,9 @@ class Charts {
             options: {
               title: {
                 display: true,
-                text: 'Total percentage of positive and negative comments'
+                text: 'Total Percentage of Positive and Negative Comments',
+                fontFamily: 'Quicksand',
+                fontSize: 16,
               }
             }
         }

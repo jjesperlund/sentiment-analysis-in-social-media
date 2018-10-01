@@ -4,8 +4,10 @@
 
 createTable = (table, data) => {
   // Dummy table
-  const dataSize = data.length; // Dummy
-  //for (let i in dataArray )
+  const dataSize = data.length; 
+  // Shuffle data array content
+  data = data.sort(() => Math.random() - 0.5);
+
   for (let row = 0; row < dataSize; row++) {
 
     let item = data[row];
