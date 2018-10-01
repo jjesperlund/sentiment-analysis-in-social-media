@@ -10,6 +10,10 @@ classifier_f = open("naivebayes.pickle", "rb")
 classifier = pickle.load(classifier_f)
 classifier_f.close()
 
+def getProbabilityDist(comment):
+    prob_dist = classifier.prob_classify(word_feature_vec(comment))
+    return [prob_dist.prob('positive'), prob_dist.prob('negative')]
+
 def retrieveYoutube(category):
     get_youtube = requests.get('http://127.0.0.1:5100/api/youtube-videos?category='+category+'&count=10')
     response_json = get_youtube.json()
@@ -24,24 +28,25 @@ def retrieveYoutube(category):
             sentiment = classifier.classify(word_feature_vec(comment)) #pos eller neg
             c['sentiment'] = sentiment
             c['videoTitle'] = i['title']
+            prob_dist = getProbabilityDist(comment)
+            c['probability'] = prob_dist
             json_vec.append(c)
 
     return json_vec
 
 def retrieveTwitter(category):
-    get_twitter = requests.get('http://127.0.0.1:5100/api/tweets?category=' +category+'&count=10')
+    get_twitter = requests.get('http://127.0.0.1:5100/api/tweets?category=' +category+'&count=100')
     response_json = get_twitter.json()
     #print(response_json)
     json_vec = []
     for json_obj in response_json:
-        tweet = clean_tweet(json_obj['tweetText'])
+        json_obj['comment'] = json_obj['tweetText']
+        json_obj.pop('tweetText')
+        tweet = clean_tweet(json_obj['comment'])
         sentiment = classifier.classify(word_feature_vec(tweet))
-        # prob_dist = classifier.prob_classify(word_feature_vec(tweet))
-        # print(json_obj['tweetText'])
-        # for label in prob_dist.samples():
-        #     print("%s: %f" % (label, prob_dist.prob(label)))
-                
         json_obj['sentiment'] = sentiment
+        prob_dist = getProbabilityDist(tweet)
+        json_obj['probability'] = prob_dist
         json_vec.append(json_obj)
     
     return json_vec
@@ -59,17 +64,15 @@ def index():
 @app.route("/category=<category>")
 def category_route(category):
     category_variable = category
-    #youtube_vec = retrieveYoutube(category_variable)
+    youtube_vec = retrieveYoutube(category_variable)
     twitter_vec = retrieveTwitter(category_variable)
 
-    json_vec = twitter_vec #+youtube_vec
+    json_vec = twitter_vec+youtube_vec
     json_vec = json.dumps(json_vec)
-    #with open('youtubeTwitter.json', 'w') as outfile:
-        #json_vec = json.dumps(json_vec)
-        #json_dat = json.loads(json_vec)
-        #print(json_dat)
-        #print(json_dat)
-        #json.dump(json_dat, outfile)
+    with open('youtubeTwitter.json', 'w') as outfile:
+        json_vec = json.dumps(json_vec)
+        json_dat = json.loads(json_vec)
+        json.dump(json_dat, outfile)
     return json_vec
     
 
