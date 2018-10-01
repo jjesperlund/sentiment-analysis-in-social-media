@@ -25,6 +25,6 @@ createTable = (table, data) => {
     '" style="width:30px;height:30px;border-radius:50%;" alt="social_media_logo"/>' + 
     '&ensp;' + item.authorDisplayName;
     cell3.innerHTML = item.tweetText;
-    cell4.innerHTML = moment(item.timestamp).format('YYYY-MM-DD');
+    cell4.innerHTML = moment(item.timestamp).format('YYYY-MM-DD HH:SS');
   }
 }

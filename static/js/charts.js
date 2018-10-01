@@ -5,15 +5,18 @@ class Charts {
         wrapper.appendChild(canvas);
         const ctx = canvas.getContext('2d');
         let twitterData = [], youtubeData = [];
+        let legend;
         
         for (let prop in data) {
           const item = data[prop];
           if (sentiment === 'positive') {
             twitterData.push(item.twitter.positive);
             youtubeData.push(item.youtube.positive);
+            legend = 'Development of Positive Comments';
           } else {
             twitterData.push(item.twitter.negative);
             youtubeData.push(item.youtube.negative);
+            legend = 'Development of Negative Comments';
           }
         }
 
@@ -36,8 +39,10 @@ class Charts {
             },
             options: {
               title: {
-                display: false,
-                text: ''
+                display: true,
+                text: legend,
+                fontFamily: 'Quicksand',
+                fontSize: 16,
               }
             }
           };
