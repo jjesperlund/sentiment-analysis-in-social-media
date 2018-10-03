@@ -5,12 +5,11 @@
 createTable = (table, data) => {
   // Dummy table
   const dataSize = data.length; 
-  // Shuffle data array content
-  data = data.sort(() => Math.random() - 0.5);
 
   for (let row = 0; row < dataSize; row++) {
 
-    let item = data[row];
+    const item = data[row];
+    const profileImageExists = (item.authorProfileImageUrl) ? true : false; 
 
     var newRow = table.insertRow(-1);
     let cell1 = newRow.insertCell(0);
@@ -22,11 +21,17 @@ createTable = (table, data) => {
     cell1.innerHTML = 
     '<img src="../static/assets/' + item.socialMedia + 
     '_logo.png" style="max-height:25px" alt="social_media_logo"/>';
-    cell2.innerHTML = 
-    '<img src="' + item.authorProfileImageUrl + 
-    '" style="width:30px;height:30px;border-radius:50%;" alt="social_media_logo"/>' + 
-    '&ensp;' + item.authorDisplayName;
-    cell3.innerHTML = item.tweetText;
+    if (profileImageExists) {
+      cell2.innerHTML = 
+      '<img src="' + item.authorProfileImageUrl + 
+      '" style="width:30px;height:30px;border-radius:50%;" alt="social_media_logo"/>' + 
+      '&ensp;' + item.authorDisplayName;
+    } else {
+      cell2.innerHTML = '<img src="../static/assets/default_reddit.png" style="width:30px;height:30px;border-radius:50%;" alt="social_media_logo"/>' + 
+      '&ensp;' + item.authorDisplayName;
+    }
+    
+    cell3.innerHTML = item.comment;
     cell4.innerHTML = moment(item.timestamp).format('YYYY-MM-DD HH:SS');
   }
 }

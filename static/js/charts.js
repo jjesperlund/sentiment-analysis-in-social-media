@@ -4,7 +4,7 @@ class Charts {
         const wrapper = document.getElementById('line-chart');
         wrapper.appendChild(canvas);
         const ctx = canvas.getContext('2d');
-        let twitterData = [], youtubeData = [];
+        let twitterData = [], youtubeData = [], redditData = [];
         let legend;
         
         for (let prop in data) {
@@ -12,10 +12,12 @@ class Charts {
           if (sentiment === 'positive') {
             twitterData.push(item.twitter.positive);
             youtubeData.push(item.youtube.positive);
+            redditData.push(item.reddit.positive);
             legend = 'Development of Positive Comments';
           } else {
             twitterData.push(item.twitter.negative);
             youtubeData.push(item.youtube.negative);
+            redditData.push(item.reddit.negative);
             legend = 'Development of Negative Comments';
           }
         }
@@ -33,6 +35,11 @@ class Charts {
                   data: twitterData,
                   label: "Twitter",
                   borderColor: "#00C6FF",
+                  fill: false
+                }, {
+                  data: redditData,
+                  label: "Reddit",
+                  borderColor: '#FF4500',
                   fill: false
                 }
               ]
@@ -62,7 +69,9 @@ class Charts {
               datasets: [{
                 //label: "Population (millions)",
                 backgroundColor: ["#3de253", "#db3f34"],
-                data: [data.twitter.positive + data.youtube.positive, data.twitter.negative + data.youtube.negative]
+                data: [data.twitter.positive + data.youtube.positive + data.reddit.positive, 
+                       data.twitter.negative + data.youtube.negative + data.reddit.negative
+                      ]
               }]
             },
             options: {
