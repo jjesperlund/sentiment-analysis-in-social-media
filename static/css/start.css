@@ -1,32 +1,52 @@
 body {
-padding-top: 50px;
-background: #2f3135;
-font-family: 'Quicksand';
+    padding-top: 50px;
+    background: #2f3135;
+    font-family: 'Quicksand';
 }
-  
-.container{
-width: 400px;
-margin: 0 auto;
-border: solid 1px #ccc;
-border-radius: 5px;
-overflow: hidden;
+
+.container {
+    width: 400px;
+    margin: 0 auto;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 #input-wrapper {
-margin-top: 45%;
-height: 80px;
-background: none;
-font-size: 45px;
-font-weight: 100;
-text-align: center;
-color: whitesmoke;
+    margin-top: 45%;
+    height: 80px;
+    background: none;
+    font-size: 45px;
+    font-weight: 100;
+    text-align: center;
+    color: whitesmoke;
 }
 
 #input-details {
-color: whitesmoke;
-text-align: center;
-font-size: 15px;
-padding-top: 2%;
-font-weight: 100;
-opacity: 0.6;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 15px;
+    padding-top: 2%;
+    font-weight: 100;
+    opacity: 0.6;
+}
+
+.fa {
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    font-size: 3em !important;
+}
+
+#youtube {
+    color: #bb0000
+}
+
+#twitter {
+    color: #00aced
+}
+
+#reddit {
+    color:#FF5700	
 }
