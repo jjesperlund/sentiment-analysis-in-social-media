@@ -32,7 +32,7 @@ window.onload = () => {
   const occurrencesPerDay = calculateOccurences(testData);
   const sum = sumOccurrences(occurrencesPerDay);
 
-  // Sort by date
+  // Sort occurrences by date
   var occurrencesPerDay_sorted = {};
   Object.keys(occurrencesPerDay).sort(function(a, b) {
       return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
@@ -40,14 +40,19 @@ window.onload = () => {
     occurrencesPerDay_sorted[key] = occurrencesPerDay[key];
   })
 
+  // Sort table content by date
+  var data_sorted = testData.slice(0);
+  data_sorted.sort(function(a,b) {
+      return moment(b.timestamp) - moment(a.timestamp);
+  });
+
+
+
   const sortedDates = Object.keys(occurrencesPerDay_sorted);
   document.getElementById('timespan').innerHTML = '<h4>Timespan: <b>' 
   + sortedDates[0] + ' - ' + sortedDates[sortedDates.length - 1] + '</b></h4>';
 
-  //console.log(occurrencesPerDay_sorted);
-  //console.log(sum);
-  
-  createTable(table, testData);
+  createTable(table, data_sorted);
   charts.createLineChart(lineChartCanvas1, occurrencesPerDay_sorted, 'positive'); //Positive chart
   charts.createLineChart(lineChartCanvas2, occurrencesPerDay_sorted, 'negative'); // Negative chart
   charts.createPiechart(pieChartCanvas, sum);
