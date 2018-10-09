@@ -177,7 +177,7 @@ app.get('/api/reddit-comments', function(req, res) {
     'https://api.pushshift.io/reddit/search/comment/?q=' + category + '&limit=' + count,
     function(error, response) {
     if (error) throw error;
-    
+
     let result = response.data.map((item) => ({
       socialMedia: "reddit",
       authorDisplayName: item.author,
