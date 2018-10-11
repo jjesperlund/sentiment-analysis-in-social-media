@@ -46,7 +46,7 @@ def retrieveTwitter(category):
     json_vec = []
 
     # Request tweets
-    get_twitter = requests.get('http://127.0.0.1:5100/api/tweets?category=' +category+'&count=100')
+    get_twitter = requests.get('http://127.0.0.1:5100/api/tweets?category=' +category+'&count=200')
     response_json = get_twitter.json()
     for json_obj in response_json:
         json_obj['comment'] = json_obj['tweetText']
@@ -93,10 +93,10 @@ def category_route(category):
 
     json_vec = twitter_vec+youtube_vec+reddit_vec
     json_vec = json.dumps(json_vec)
-    #with open('youtubeTwitter.json', 'w') as outfile:
-     #   json_vec = json.dumps(json_vec)
-      #  json_dat = json.loads(json_vec)
-       # json.dump(json_dat, outfile)
+    '''with open('youtubeTwitterReddit.json', 'w') as outfile:
+        json_vec = json.dumps(json_vec)
+        json_dat = json.loads(json_vec)
+        json.dump(json_dat, outfile)'''
     return json_vec
     
 
