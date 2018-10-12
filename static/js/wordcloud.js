@@ -39,6 +39,8 @@ function regexClean(text_string) {
   text_string = text_string.replace(/(@[A-Za-z0-9_]+)/g, ''); //Remove @user
   text_string = text_string.replace(/\n/g, '') // Remove '\n'
   text_string = text_string.replace(/(&[A-Za-z0-9_]+)/g, ''); //Remove &amp, &gt etc..
+  text_string = text_string.replace(/\s\d+/g, '');
+
   return text_string.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '') //Remove emojis.
 }
 
