@@ -25,7 +25,7 @@ function getTopFreq(hash_map) {
   result.sort(function (p1, p2) {
     return p2.value - p1.value;
   });
-  var topFreq = result.slice(0, 20);
+  var topFreq = result.slice(0, 200);
   var word_count = {}
   topFreq.forEach((d) => {
     word_count[d.key] = d.value
@@ -35,8 +35,9 @@ function getTopFreq(hash_map) {
 
 // Clean concatenated sentence for word cloud.
 function regexClean(text_string) {
-  text_string = text_string.replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''); //Remove uRL
+  text_string = text_string.replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''); //Remove URL
   text_string = text_string.replace(/(@[A-Za-z0-9_]+)/g, ''); //Remove @user
+  text_string = text_string.replace(/(#[A-Za-z0-9_]+)/g, ''); //Remove hashtags
   text_string = text_string.replace(/\n/g, '') // Remove '\n'
   text_string = text_string.replace(/(&[A-Za-z0-9_]+)/g, ''); //Remove &amp, &gt etc..
   text_string = text_string.replace(/\s\d+/g, '');
@@ -45,9 +46,16 @@ function regexClean(text_string) {
 }
 
 
-function drawWordCloud(data) {
+function drawWordCloud(data, cloudId) {
   var sentiment_vec = concatComments(data)
-  var text_string = sentiment_vec[1]
+  var text_string = ""
+  if(cloudId == '#cloud-pos'){
+     text_string = sentiment_vec[0]
+  }
+  else{
+    text_string = sentiment_vec[1]
+  }
+
   text_string = text_string.removeStopWords();
 
   var common = "poop,i,me,my,myself,we,us,our,ours,ourselves,you,your,yours,yourself,yourselves,he,him,his,himself,she,her,hers,herself,it,its,itself,they,them,their,theirs,themselves,what,which,who,whom,whose,this,that,these,those,am,is,are,was,were,be,been,being,have,has,had,having,do,does,did,doing,will,would,should,can,could,ought,i'm,you're,he's,she's,it's,we're,they're,i've,you've,we've,they've,i'd,you'd,he'd,she'd,we'd,they'd,i'll,you'll,he'll,she'll,we'll,they'll,isn't,aren't,wasn't,weren't,hasn't,haven't,hadn't,doesn't,don't,didn't,won't,wouldn't,shan't,shouldn't,can't,cannot,couldn't,mustn't,let's,that's,who's,what's,here's,there's,when's,where's,why's,how's,a,an,the,and,but,if,or,because,as,until,while,of,at,by,for,with,about,against,between,into,through,during,before,after,above,below,to,from,up,upon,down,in,out,on,off,over,under,again,further,then,once,here,there,when,where,why,how,all,any,both,each,few,more,most,other,some,such,no,nor,not,only,own,same,so,than,too,very,say,says,said,shall";
@@ -71,12 +79,11 @@ function drawWordCloud(data) {
     })
   }
 
-  var svg_location = "#cloud";
+  var svg_location = cloudId;
   var topFreqWord = getTopFreq(word_count)
-  console.log(topFreqWord)
 
-  var width = $(document).width();
-  var height = $(document).height();
+  var width = 800//$(cloudId).width();
+  var height = 600 //$(cloudId).height();
 
   var fill = d3.scale.category20();
 
@@ -128,6 +135,5 @@ function drawWordCloud(data) {
         return d.key;
       });
   }
-
   d3.layout.cloud().stop();
 }
