@@ -57,33 +57,41 @@ class Charts {
 
     }
 
-    createPiechart(canvas, data) {
-        const wrapper = document.getElementById('pie-chart');
-        wrapper.appendChild(canvas);
-        const ctx = canvas.getContext('2d');
-
-        const config = {
-            type: 'pie',
-            data: {
-              labels: ["Positive comments", "Negative comments"],
-              datasets: [{
-                //label: "Population (millions)",
-                backgroundColor: ["#3de253", "#db3f34"],
-                data: [data.twitter.positive + data.youtube.positive + data.reddit.positive, 
-                       data.twitter.negative + data.youtube.negative + data.reddit.negative
-                      ]
-              }]
-            },
-            options: {
-              title: {
-                display: true,
-                text: 'Total Percentage of Positive and Negative Comments',
-                fontFamily: 'Quicksand',
-                fontSize: 16,
-              }
+    createBarchart(canvas, data) {
+      const wrapper = document.getElementById('bar-chart');
+      wrapper.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      const config = {
+        type: 'horizontalBar',
+        data: {
+          labels: ['Positive', 'Negative'],
+          datasets: [
+            {
+              label: "Number of comments",
+              backgroundColor: ["#3de253", "#db3f34"],
+              data: [data.twitter.positive + data.youtube.positive + data.reddit.positive, 
+                data.twitter.negative + data.youtube.negative + data.reddit.negative
+               ]
             }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Distribution of Comments'
+          },
+          scales: {
+            xAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true 
+                }
+            }]
         }
-        const pieChart = new Chart(ctx, config);
+        }
+    };
+    const barchart = new Chart(ctx, config);
     }
 
 }
