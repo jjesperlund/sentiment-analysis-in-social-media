@@ -34,8 +34,8 @@
   <!-- Tab links -->
   <div class="tab">
     <button class="tablinks active" onclick="toggleTab(event, 'Overview')">Overview</button>
-    <button class="tablinks" onclick="toggleTab(event, 'Word-cloud')">Word Cloud</button>
-    <button class="tablinks" onclick="toggleTab(event, 'List')">List</button>
+    <button class="tablinks" onclick="toggleTab(event, 'Word-cloud')">Most Frequent Words</button>
+    <button class="tablinks" onclick="toggleTab(event, 'List')">Comment List</button>
 
     <a href="./" type="button" style="margin-right: 1%;" class="btn btn-default navbar-btn pull-right">
       New Search
@@ -95,7 +95,7 @@
   </div>
 
   <div id="Word-cloud" class="tabcontent">
-    <h3>Word Cloud</h3>
+    <h3>Most Frequent Words</h3>
     <div class="row">
       <div class="col-lg-2" id="overview-stats" style="float:left">
         <h4>Positive</h4>
@@ -111,7 +111,7 @@
     </div>
 
     <div id="List" class="tabcontent">
-      <h3>List</h3>
+      <h3>Comment List</h3>
       <div class="row">
         <div class="wrapper col-sm-12">
           <div id="table-content">
@@ -139,6 +139,7 @@
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="../static/js/table.js"></script>
+    <script type="text/javascript" src="../static/js/adjectives.js"></script>
     <script type="text/javascript" src="../static/js/wordcloud.js"></script>
     <script type="text/javascript" src="../static/js/stopWords.js"></script>
     <script type="text/javascript" src="../static/js/charts.js"></script>

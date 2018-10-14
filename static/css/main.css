@@ -20,6 +20,12 @@ h4 {
   font-size: 16pt;
 }
 
+#cloud-pos, #cloud-neg {
+  padding-top: 5%;
+  width: 60vh;
+  height: 600px;
+}
+
 #percentage {
   font-size: 14pt;
   width: 100%;
@@ -74,6 +80,7 @@ h4 {
   background-color: inherit;
   float: left;
   border: none;
+  border-bottom: 1.5px solid whitesmoke;
   border-radius: 6px 6px 0px 0px;
   outline: none;
   cursor: pointer;

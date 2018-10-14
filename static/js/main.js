@@ -124,7 +124,8 @@ displayPercentageText = (sum, length) => {
 
   testData2 = JSON.parse(testData2);
   overview(testData2)
-  drawWordCloud(testData2)
+  drawWordCloud(testData2, '#cloud-pos');
+  drawWordCloud(testData2, '#cloud-neg');
 
   function overview(data) {
     var testData = data;
