@@ -63,7 +63,7 @@ function drawWordCloud(data, cloudId) {
   var word_count = {};
   text_string = regexClean(text_string)
   var words = text_string.split(/[ '\-\(\)\*":;\[\]|{},.!?]+/);
-
+  
   if (words.length == 1) {
     word_count[words[0]] = 1;
   } else {
