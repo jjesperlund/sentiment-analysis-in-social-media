@@ -8,7 +8,7 @@ createTable = (table, data) => {
 
   for (let row = 0; row < dataSize; row++) {
     const item = data[row];
-    console.log(item)
+    //console.log(item)
     const profileImageExists = (item.authorProfileImageUrl) ? true : false; 
 
     var newRow = table.insertRow(-1);

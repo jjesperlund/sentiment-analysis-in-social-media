@@ -47,6 +47,12 @@
 
   <!-- Tab content -->
   <div id="Overview" class="tabcontent">
+    <div class="loading style-2" id="loading">
+      <p id="loading_text">
+        Fetching data...
+      </p>
+      <div class="loading-wheel"></div>
+    </div>
     <h3>Overview</h3>
     <div class="container-fluid">
     </div>
@@ -73,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4" id="overview-stats" style="float: right;padding:3%;border-left:1px solid #ccc;">
+      <div class="col-lg-4" id="overview-stats" style="float: right;padding:3%;">
         <div class="row">
           <div id="line-chart">
             <!-- Content is inserted here from javascript -->
@@ -100,76 +106,78 @@
       <div class="col-lg-2" id="overview-stats" style="float:left">
         <h4>Positive</h4>
         <div class="row">
-          <div id = cloud-pos></div>
+          <div id=cloud-pos></div>
         </div>
       </div>
       <div class="col-lg-2" id="overview-stats" style="float: right; border-left:1px solid #ccc;">
         <h4>Negative</h4>
         <div class="row">
-          <div id = cloud-neg></div>
-      </div>
-    </div>
-
-    <div id="List" class="tabcontent">
-      <h3>Comment List</h3>
-      <div class="row">
-        <div class="wrapper col-sm-12">
-          <div id="table-content">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Social Media</th>
-                  <th scope="col">User</th>
-                  <th scope="col">Comment</th>
-                  <th scope="col">Timestamp</th>
-                </tr>
-              </thead>
-              <tbody id="table">
-                <!-- Content is inserted here from javascript -->
-              </tbody>
-            </table>
-          </div>
+          <div id=cloud-neg></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- /.container -->
+  <div id="List" class="tabcontent">
+    <h3>Comment List</h3>
+    <div class="row">
+      <div class="wrapper col-sm-12">
+        <div id="table-content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Social Media</th>
+                <th scope="col">User</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="table">
+              <!-- Content is inserted here from javascript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Bootstrap core JavaScript
+  <!-- /.container -->
+
+  <!-- Bootstrap core JavaScript
 ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="../static/js/table.js"></script>
-    <script type="text/javascript" src="../static/js/adjectives.js"></script>
-    <script type="text/javascript" src="../static/js/wordcloud.js"></script>
-    <script type="text/javascript" src="../static/js/stopWords.js"></script>
-    <script type="text/javascript" src="../static/js/charts.js"></script>
-    <script type="text/javascript" src="../static/js/moment.js"></script>
-    <script type="text/javascript" src="../static/js/main.js"></script>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="../static/js/table.js"></script>
+  <script type="text/javascript" src="../static/js/adjectives.js"></script>
+  <script type="text/javascript" src="../static/js/wordcloud.js"></script>
+  <script type="text/javascript" src="../static/js/stopWords.js"></script>
+  <script type="text/javascript" src="../static/js/charts.js"></script>
+  <script type="text/javascript" src="../static/js/moment.js"></script>
+  <script type="text/javascript" src="../static/js/main.js"></script>
 
 
 
-    <script>
-      function toggleTab(evt, tabName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
+  <script>
+    function toggleTab(evt, tabName) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
 
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
       }
-    </script>
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
 
 </body>
 

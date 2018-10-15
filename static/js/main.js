@@ -1,5 +1,6 @@
 window.onload = () => {
-
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("overview-stats").style.borderLeft = "none";
   var charts = new Charts();
   var table = document.getElementById("table");
   let tab = document.getElementById('Overview');
@@ -15,122 +16,125 @@ window.onload = () => {
   var category = window.location.search.split('=')[1]
   console.log('Fetching data about: ', category);
 
-/*
+
   $.get("/category=" + category, function (data) {
     var sentiment_data = $.parseJSON(data);
     overview(sentiment_data)
-    drawWordCloud(sentiment_data)
-    //console.log(sentiment_data)
+    drawWordCloud(sentiment_data, '#cloud-pos');
+    drawWordCloud(sentiment_data, '#cloud-neg');
+    //border-left:1px solid #ccc;
+    document.getElementById("loading").style.display = "none";
+    //document.getElementById("overview-stats").style.borderLeft = "1px solid #ccc";
   })
-  */
- // Calculate occurrences for pos and neg comments for each social media
- calculateOccurences = (data) => {
-  occurences = {};
-  data.forEach((item) => {
 
-    const formatted_timestamp = moment(item.timestamp).format('YYYY-MM-DD');
+  // Calculate occurrences for pos and neg comments for each social media
+  calculateOccurences = (data) => {
+    occurences = {};
+    data.forEach((item) => {
 
-    // If date already exists, add number of comments in correct key
-    if (occurences[formatted_timestamp]) {
-      occurences[formatted_timestamp][item.socialMedia][item.sentiment] += 1;
-    } else {
-      occurences[formatted_timestamp] = {
-        twitter: {
-          positive: 0,
-          negative: 0
-        },
-        youtube: {
-          positive: 0,
-          negative: 0
-        },
-        reddit: {
-          positive: 0,
-          negative: 0
-        }
-      };
-      occurences[formatted_timestamp][item.socialMedia][item.sentiment] += 1;
-    }
-  });
-  return occurences;
-}
+      const formatted_timestamp = moment(item.timestamp).format('YYYY-MM-DD');
 
-sumOccurrences = (data) => {
-  let sum = {
-    twitter: {
-      positive: 0,
-      negative: 0,
-    },
-    youtube: {
-      positive: 0,
-      negative: 0,
-    },
-    reddit: {
-      positive: 0,
-      negative: 0
-    }
-  };
-  for (let date in data) {
-    sum.youtube.positive += data[date].youtube.positive;
-    sum.youtube.negative += data[date].youtube.negative;
-    sum.twitter.positive += data[date].twitter.positive;
-    sum.twitter.negative += data[date].twitter.negative;
-    sum.reddit.positive += data[date].reddit.positive;
-    sum.reddit.negative += data[date].reddit.negative;
-  };
-  return sum;
-}
-
-displayPercentageText = (sum, length) => {
-
-  let divText = document.getElementById('percentage-text');
-  let divEmoji = document.getElementById('emoji');
-
-  let posPercentage = ([sum.twitter.positive + sum.youtube.positive + sum.reddit.positive] / length) * 100;
-  let negPercentage = ([sum.twitter.negative + sum.youtube.negative + sum.reddit.negative] / length) * 100;
-  posPercentage = posPercentage.toFixed(1);
-  negPercentage = negPercentage.toFixed(1);
-
-  const ratio = (posPercentage/negPercentage).toFixed(1);
-
-  divText.innerText = 'Social media comments on ' + category + 
-    ' are  ' + posPercentage + '% positive and ' + negPercentage + '% negative.';
-
-  let img = document.createElement('img');
-  img.setAttribute('width', 50);
-  img.setAttribute('height', 50);
-
-  let emoji;
-
-  switch (true) {
-    case ratio <= 0.5:
-      emoji = 'angry';
-      break;
-    case ratio > 0.5 && ratio < 1.5:
-      emoji = 'neutral';
-      break;
-    case ratio >= 1.5:
-      emoji = 'happy';
-      break;
-    
-    default: 
-      emoji = 'neutral';
-      console.log('Using default image');
-      break;
+      // If date already exists, add number of comments in correct key
+      if (occurences[formatted_timestamp]) {
+        occurences[formatted_timestamp][item.socialMedia][item.sentiment] += 1;
+      } else {
+        occurences[formatted_timestamp] = {
+          twitter: {
+            positive: 0,
+            negative: 0
+          },
+          youtube: {
+            positive: 0,
+            negative: 0
+          },
+          reddit: {
+            positive: 0,
+            negative: 0
+          }
+        };
+        occurences[formatted_timestamp][item.socialMedia][item.sentiment] += 1;
+      }
+    });
+    return occurences;
   }
-  img.setAttribute('src', '../static/assets/emoji_' + emoji + '.png');
-  divEmoji.appendChild(img);
-  
-}
 
-  testData2 = JSON.parse(testData2);
+  sumOccurrences = (data) => {
+    let sum = {
+      twitter: {
+        positive: 0,
+        negative: 0,
+      },
+      youtube: {
+        positive: 0,
+        negative: 0,
+      },
+      reddit: {
+        positive: 0,
+        negative: 0
+      }
+    };
+    for (let date in data) {
+      sum.youtube.positive += data[date].youtube.positive;
+      sum.youtube.negative += data[date].youtube.negative;
+      sum.twitter.positive += data[date].twitter.positive;
+      sum.twitter.negative += data[date].twitter.negative;
+      sum.reddit.positive += data[date].reddit.positive;
+      sum.reddit.negative += data[date].reddit.negative;
+    };
+    return sum;
+  }
+
+  displayPercentageText = (sum, length) => {
+
+    let divText = document.getElementById('percentage-text');
+    let divEmoji = document.getElementById('emoji');
+
+    let posPercentage = ([sum.twitter.positive + sum.youtube.positive + sum.reddit.positive] / length) * 100;
+    let negPercentage = ([sum.twitter.negative + sum.youtube.negative + sum.reddit.negative] / length) * 100;
+    posPercentage = posPercentage.toFixed(1);
+    negPercentage = negPercentage.toFixed(1);
+
+    const ratio = (posPercentage / negPercentage).toFixed(1);
+
+    divText.innerText = 'Social media comments on ' + category +
+      ' are  ' + posPercentage + '% positive and ' + negPercentage + '% negative.';
+
+    let img = document.createElement('img');
+    img.setAttribute('width', 50);
+    img.setAttribute('height', 50);
+
+    let emoji;
+
+    switch (true) {
+      case ratio <= 0.6:
+        emoji = 'angry';
+        break;
+      case ratio > 0.6 && ratio < 1.4:
+        emoji = 'neutral';
+        break;
+      case ratio >= 1.4:
+        emoji = 'happy';
+        break;
+
+      default:
+        emoji = 'neutral';
+        console.log('Using default image');
+        break;
+    }
+    img.setAttribute('src', '../static/assets/emoji_' + emoji + '.png');
+    divEmoji.appendChild(img);
+
+  }
+
+  /*testData2 = JSON.parse(testData2);
   overview(testData2)
   drawWordCloud(testData2, '#cloud-pos');
-  drawWordCloud(testData2, '#cloud-neg');
+  drawWordCloud(testData2, '#cloud-neg');*/
 
   function overview(data) {
     var testData = data;
+    category = category.replace("%20", ' ');
     document.getElementById('category-name').innerHTML = 'Category: ' + '<b>' + category + '</b>';
-
     document.getElementById('category-hash').innerHTML = '<h4><b>#' + category + '</b></h4>';
 
     document.getElementById('amount-comments').innerHTML = '<h4>Amount comments fetched: <b>' +
@@ -168,7 +172,7 @@ displayPercentageText = (sum, length) => {
 
   }
 
-  
+
 }
 
 

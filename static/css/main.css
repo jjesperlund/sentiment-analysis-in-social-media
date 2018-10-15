@@ -45,6 +45,7 @@ h4 {
 #overview-stats {
   width: 50%;
   /*box-shadow: 1px 1px 10px 1px #acabab;*/
+  
 }
 
 #cloud{
@@ -113,4 +114,51 @@ h4 {
 @keyframes fadeEffect {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.5);
+}
+.loading-wheel {
+  width: 20px;
+  height: 20px;
+  margin-top: -40px;
+  margin-left: -40px;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  border-width: 30px;
+  border-radius: 50%;
+  -webkit-animation: spin 1s linear infinite;
+}
+
+#loading_text{
+  margin-top: 45px;
+  margin-left: -88px;
+  font-size: 20pt;
+  font-family: "Quicksand";
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+.style-2 .loading-wheel {
+  border-style: double;
+  border-color: #ccc transparent;
+}
+@-webkit-keyframes spin {
+  0% {
+      -webkit-transform: rotate(0);
+  }
+  100% {
+      -webkit-transform: rotate(-360deg);
+  }
 }
