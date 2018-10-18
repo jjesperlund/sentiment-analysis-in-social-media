@@ -75,7 +75,7 @@ getVideoListMultipleId = (auth, requestData, res) => {
     let result = [];
     response.data.items.forEach((item) => {
       // Add videos if videoId exists and if commentCount != None
-      if (item.id && item.statistics.commentCount != 0) {
+      if (item.id && typeof item.statistics.commentCount !== "undefined") {
         result.push({
           title: item.snippet.title,
           videoId: item.id,
